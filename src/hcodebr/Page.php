@@ -22,14 +22,14 @@ class Page
     public function __construct(array $opts = [])
     {
         $this->options = array_merge($this->defaults, $opts);
-
-        Tpl::configure([
-            "tpl_dir" => $_SERVER['DOCUMENT_ROOT'] . "/views/",
-            "cache_dir" => $_SERVER['DOCUMENT_ROOT'] . "/views-cache/",
+        $config = [
+            "tpl_dir" => $_SERVER['DOCUMENT_ROOT'] . "/views/store/",
+            "cache_dir" => $_SERVER['DOCUMENT_ROOT'] . "/views-cache/store/",
             "debug" => false,
-        ]);
+        ];
 
-        $this->tpl = new Tpl();
+        Tpl::configure($config);
+        $this->tpl = new Tpl;
         $this->setData($this->options['data']);
         $this->tpl->draw("header");
     }

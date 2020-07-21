@@ -1,17 +1,16 @@
 <?php
-
-use Hcode\DB\Sql;
-use Slim\Slim;
-
 require __DIR__ . "/vendor/autoload.php";
+
+use Hcode\Page;
+use Slim\Slim;
 
 $app = new Slim();
 $app->config('debug', true);
 
+### Routes ###
 $app->get('/', function () {
-    $sql = new Sql();
-    $result = $sql->select("SELECT * FROM tb_users");
-    echo json_encode($result);
+    $page = new Page();
+    $page->setTpl("index");
 });
 
 $app->run();
