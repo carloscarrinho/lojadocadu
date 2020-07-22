@@ -19,17 +19,16 @@ class Page
      * @param  array $opts
      * @return void
      */
-    public function __construct(array $opts = [])
+    public function __construct(array $opts = [], string $tpl_dir = "/views/store/")
     {
         $this->options = array_merge($this->defaults, $opts);
-        $config = [
-            "tpl_dir" => $_SERVER['DOCUMENT_ROOT'] . "/views/store/",
-            "cache_dir" => $_SERVER['DOCUMENT_ROOT'] . "/views-cache/store/",
+        Tpl::configure([
+            "tpl_dir" => $_SERVER['DOCUMENT_ROOT'] . $tpl_dir,
+            "cache_dir" => $_SERVER['DOCUMENT_ROOT'] . "/cache/",
             "debug" => false,
-        ];
+        ]);
 
-        Tpl::configure($config);
-        $this->tpl = new Tpl;
+        $this->tpl = new Tpl();
         $this->setData($this->options['data']);
         $this->tpl->draw("header");
     }
