@@ -9,7 +9,14 @@
         </testsuite>
     </testsuites>
 
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+          <directory suffix=".php">src</directory>
+        </whitelist>
+      </filter>
+
     <logging>
-        <log type="testdox-text" target="/tests/tests.txt"/>
+        <log type="testdox-text" target="./tests/tests-report.txt"/>
+        <log type="coverage-text" target="./tests/coverage-report.txt" showUncoveredFiles="true"/>
     </logging>
 </phpunit>
