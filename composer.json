@@ -16,5 +16,8 @@
             "Hcode\\": "src/hcodebr",
             "Cadu\\": "src/cadu"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2"
     }
 }
