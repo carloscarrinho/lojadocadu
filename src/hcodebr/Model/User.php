@@ -158,7 +158,7 @@ class User extends Model
 
         $code = base64_encode($code);
 
-        $link = 'http://www.lojadocadu.com.br/admin/forgot/reset?code=$code';
+        $link = "http://www.lojadocadu.com.br/admin/forgot/reset?code=$code";
 
         $mailer = new Mailer(
             $data["desemail"],
@@ -173,5 +173,61 @@ class User extends Model
         $mailer->send();
 
         return $data;
+    }
+
+    public static function validForgotDecrypt($code)
+    {
+        $idRecovery = openssl_decrypt(
+            base64_decode($code),
+            'AES-128-CBC',
+            pack("a16", CONF_APP_SECRET),
+            0,
+            pack("a16", User::SECRET_IV)
+        );
+
+        $sql = new Sql();
+        $results = $sql->select(
+            "SELECT * FROM tb_userspasswordsrecoveries a
+            INNER JOIN tb_users b USING(iduser)
+            INNER JOIN tb_persons c USING(idperson)
+            WHERE a.idrecovery = :idrecovery
+            AND a.dtrecovery IS NULL
+            AND DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();",
+            [
+                ":idrecovery" => $idRecovery,
+            ]
+        );
+
+        if (count($results) === 0) {
+            throw new Exception('Não foi possível recuperar a senha');
+            return;
+        }
+
+        return $results[0];
+    }
+
+    public static function setForgotUsed($idRecovery)
+    {
+        $sql = new Sql();
+        $sql->query(
+            "UPDATE tb_userspasswordrecoveries
+            SET dtrecovery = NOW()
+            WHERE idrecovery = :idrecovery",
+            [
+                ':idrecovery' => $idRecovery,
+            ]
+        );
+    }
+
+    public function setPassword($password)
+    {
+        $sql = new Sql();
+        $sql->query(
+            "UPDATE tb_users SET despassword = :password WHERE iduser = :iduser",
+            [
+                ':password' => $password,
+                ':iduser' => $this->getiduser(),
+            ]
+        );
     }
 }
