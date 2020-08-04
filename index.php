@@ -82,7 +82,10 @@ $app->get('/admin/users/:iduser', function ($iduser) {
 $app->post('/admin/users/create', function () {
     User::verifyLogin();
     $user = new User();
+    // --- aqui não está elegante ---
     $_POST["inadmin"] = (isset($_POST['inadmin'])) ? 1 : 0;
+    $_POST['despassword'] = password_hash($_POST['despassword'], PASSWORD_BCRYPT);
+    // ------------------------------
     $user->setData($_POST);
     $user->save();
     header('Location: /admin/users');
@@ -100,6 +103,33 @@ $app->post('/admin/users/:iduser', function ($iduser) {
 
     header('Location: /admin/users');
     exit;
+});
+
+$app->get('/admin/forgot', function () {
+    $page = new PageAdmin([
+        "header" => false,
+        "footer" => false,
+    ]);
+    $page->setTpl("forgot");
+});
+
+$app->post('/admin/forgot', function () {
+    $user = User::getForgot($_POST['email']);
+
+    header("Location: /admin/forgot/sent");
+    exit;
+});
+
+$app->get('/admin/forgot/sent', function () {
+    $page = new PageAdmin([
+        "header" => false,
+        "footer" => false,
+    ]);
+
+    $page->setTpl("forgot-sent");
+});
+
+$app->get('/amdmin/forgot/reset', function () {
 
 });
 

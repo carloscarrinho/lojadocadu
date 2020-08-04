@@ -1,2 +1,6 @@
+.vscode
 vendor
 cache
+env.php
+tests/coverage-report.txt
+tests/tests-report.txt

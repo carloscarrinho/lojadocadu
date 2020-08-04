@@ -23,12 +23,12 @@ class Page
      * @param  array $opts
      * @return void
      */
-    public function __construct(array $opts = [], string $tpl_dir = "/views/store/")
+    public function __construct(array $opts = [], string $tpl_dir = CONF_VIEW_DIR_STORE)
     {
         $this->options = array_merge($this->defaults, $opts);
         Tpl::configure([
             "tpl_dir" => $_SERVER['DOCUMENT_ROOT'] . $tpl_dir,
-            "cache_dir" => $_SERVER['DOCUMENT_ROOT'] . "/cache/",
+            "cache_dir" => $_SERVER['DOCUMENT_ROOT'] . CONF_VIEW_DIR_CACHE,
             "debug" => false,
         ]);
 
