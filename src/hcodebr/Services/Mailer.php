@@ -1,6 +1,6 @@
 <?php
 
-namespace Hcode;
+namespace Hcode\Services;
 
 use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -8,8 +8,6 @@ use Rain\Tpl;
 
 class Mailer
 {
-    const SECRET = CONF_MAIL_SECRET;
-
     private $mail;
 
     public function __construct($toAddress, $toName, $subject, $tplName, $data = [])

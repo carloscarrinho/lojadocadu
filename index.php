@@ -3,8 +3,8 @@ session_start();
 require __DIR__ . "/vendor/autoload.php";
 
 use Hcode\Model\User;
-use Hcode\Page;
-use Hcode\PageAdmin;
+use Hcode\Services\Page;
+use Hcode\Services\PageAdmin;
 use Slim\Slim;
 
 $app = new Slim();

@@ -1,8 +1,6 @@
 <?php
 
-namespace Hcode;
-
-use Hcode\Page;
+namespace Hcode\Services;
 
 class PageAdmin extends Page
 {

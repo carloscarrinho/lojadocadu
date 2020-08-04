@@ -4,8 +4,8 @@ namespace Hcode\Model;
 
 use Exception;
 use Hcode\DB\Sql;
-use Hcode\Mailer;
 use Hcode\Model\Model;
+use Hcode\Services\Mailer;
 
 class User extends Model
 {
@@ -210,7 +210,7 @@ class User extends Model
     {
         $sql = new Sql();
         $sql->query(
-            "UPDATE tb_userspasswordrecoveries
+            "UPDATE tb_userspasswordsrecoveries
             SET dtrecovery = NOW()
             WHERE idrecovery = :idrecovery",
             [

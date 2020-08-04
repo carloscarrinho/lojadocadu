@@ -1,6 +1,6 @@
 <?php
 
-namespace Hcode;
+namespace Hcode\Services;
 
 use Rain\Tpl;
 
